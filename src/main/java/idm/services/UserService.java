@@ -1,7 +1,7 @@
-package com.spotify.project.services;
+package idm.services;
 
-import com.spotify.project.models.User;
-import com.spotify.project.repository.UserRepository;
+import idm.models.User;
+import idm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

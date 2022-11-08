@@ -1,7 +1,7 @@
-package com.spotify.project.controllers;
+package idm.controllers;
 
-import com.spotify.project.models.User;
-import com.spotify.project.services.UserService;
+import idm.models.User;
+import idm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

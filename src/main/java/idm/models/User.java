@@ -1,4 +1,4 @@
-package com.spotify.project.models;
+package idm.models;
 
 import javax.persistence.*;
 import java.util.Objects;
