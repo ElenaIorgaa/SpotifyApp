@@ -23,25 +23,22 @@ public class SongService {
             return new ArrayList<>();
     }
 
-    public Song createOrUpdate(Song song)
-    {
+    public Song createOrUpdate(Song song) {
         List<Song> songs = getAllSongs();
-        for(Song s : songs)
-        {
-            if(s.getReleaseDate()==song.getReleaseDate() && s.getDuration()==song.getDuration() && Objects.equals(s.getLanguage(), song.getLanguage()))
-            {
+        for (Song s : songs) {
+            if (s.getReleaseDate() == song.getReleaseDate() && s.getDuration() == song.getDuration() && Objects.equals(s.getLanguage(), song.getLanguage())) {
                 song.setId(song.getId());
             }
         }
         song = repository.save(song);
         return song;
     }
-    public Optional<Song> getSongById(int id)
-    {
+
+    public Optional<Song> getSongById(int id) {
         return repository.findById(id);
     }
-    public void deleteSongById(int id)
-    {
+
+    public void deleteSongById(int id) {
         repository.deleteById(id);
     }
 }

@@ -1,26 +1,56 @@
 package com.spotify.project.dtos;
 
-import com.spotify.project.models.Song;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spotify.project.controllers.ArtistController;
+import com.spotify.project.controllers.SongController;
+import com.sun.istack.NotNull;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.hateoas.RepresentationModel;
 
-import java.util.ArrayList;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Data
-public class ArtistDto {
+public class ArtistDto extends RepresentationModel<ArtistDto> {
+    @Id
+    @NotNull
     private int id;
+    @NotNull
     private String name;
+    @NotNull
     private String nationality;
+
+    @NotNull
     private Date birthDate;
+    @NotNull
+    @JsonIgnore
+    private List<String> songs;
 
+    public List<String> getSongs() {
+        return songs;
+    }
 
-    public ArtistDto(int id, String name, String nationality, Date birthDate, List<Song> songs) {
+    public void setSongs(List<String> songs) {
+        this.songs = songs;
+    }
+
+    @JsonCreator
+    public ArtistDto(@JsonProperty("id") int id, @JsonProperty("name") String name,
+                     @JsonProperty("nationality") String nationality, @JsonProperty("birthDate") Date birthDate,
+                     @JsonProperty("songs") List<String> songs) {
         this.id = id;
-        this.name = Objects.requireNonNull(name);
-        this.nationality = Objects.requireNonNull(nationality);
-        this.birthDate = Objects.requireNonNull(birthDate);
+        this.name = name;
+        this.nationality = nationality;
+        this.birthDate = birthDate;
+        this.songs = songs;
+        add(linkTo(methodOn(ArtistController.class).getAllArtists()).withSelfRel());
+        add(linkTo(methodOn(SongController.class).getAllSongs()).withRel("songs"));
     }
 
     public int getId() {

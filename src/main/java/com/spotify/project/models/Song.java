@@ -1,10 +1,12 @@
 package com.spotify.project.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name="songs")
+@Table(name = "songs")
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +24,20 @@ public class Song {
     @Column(name = "release_date")
     private Date releaseDate;
 
-    @ManyToMany(fetch=FetchType.LAZY,
-            cascade={
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-
-    @JoinTable(name="artist_song",
-            joinColumns = {@JoinColumn(name="id_song")},
-            inverseJoinColumns = {@JoinColumn(name="id_artist")})
+    @JsonManagedReference
+    @JoinTable(name = "artist_song",
+            joinColumns = {@JoinColumn(name = "id_song")},
+            inverseJoinColumns = {@JoinColumn(name = "id_artist")})
     private List<Artist> artists;
+
+    public Song() {
+    }
+
     public List<Artist> getArtists() {
         return artists;
     }
@@ -105,8 +111,6 @@ public class Song {
     public void setLanguage(String languange) {
         this.language = languange;
     }
-
-
 
 
 }
