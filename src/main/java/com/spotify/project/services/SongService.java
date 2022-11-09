@@ -28,7 +28,7 @@ public class SongService {
         List<Song> songs = getAllSongs();
         for(Song s : songs)
         {
-            if(s.getReleaseDate()==song.getReleaseDate() && s.getDuration()==song.getDuration() && Objects.equals(s.getLanguange(), song.getLanguange()))
+            if(s.getReleaseDate()==song.getReleaseDate() && s.getDuration()==song.getDuration() && Objects.equals(s.getLanguage(), song.getLanguage()))
             {
                 song.setId(song.getId());
             }

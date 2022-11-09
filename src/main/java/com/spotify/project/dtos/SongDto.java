@@ -1,25 +1,40 @@
 package com.spotify.project.dtos;
 
 import com.spotify.project.models.Artist;
+import com.sun.istack.NotNull;
+import lombok.Data;
 
-import java.util.Date;
-import java.util.Objects;
+import javax.persistence.Id;
+import java.util.*;
 
+//@Data
+@Data
 public class SongDto {
+    @Id
+    @NotNull
     private int id;
+    @NotNull
     private String title;
+    @NotNull
     private int duration;
+    @NotNull
     private String language;
+    @NotNull
     private Date releaseDate;
-    private Artist artist;
 
-    public SongDto(int id, String title, int duration, String language, Date releaseDate, Artist artist) {
-        this.id = id;
-        this.title = Objects.requireNonNull(title);
-        this.duration = duration;
-        this.language = Objects.requireNonNull(language);
-        this.releaseDate = Objects.requireNonNull(releaseDate);
-        this.artist = Objects.requireNonNull(artist);
+    @NotNull
+    //private Set<Artist> artist;
+    private List<Artist> artists;
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
+    public SongDto() {
     }
 
     public int getId() {
@@ -62,11 +77,5 @@ public class SongDto {
         this.releaseDate = releaseDate;
     }
 
-    public Artist getArtist() {
-        return artist;
-    }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
-    }
 }

@@ -1,8 +1,7 @@
 package com.spotify.project.models;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name="songs")
@@ -18,10 +17,29 @@ public class Song {
     private int duration;
 
     @Column(name = "language", nullable = false)
-    private String languange;
+    private String language;
 
     @Column(name = "release_date")
     private Date releaseDate;
+
+    @ManyToMany(fetch=FetchType.LAZY,
+            cascade={
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+
+    @JoinTable(name="artist_song",
+            joinColumns = {@JoinColumn(name="id_song")},
+            inverseJoinColumns = {@JoinColumn(name="id_artist")})
+    private List<Artist> artists;
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
 
     public Date getReleaseDate() {
         return releaseDate;
@@ -57,12 +75,12 @@ public class Song {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Song song = (Song) o;
-        return duration == song.duration && Objects.equals(id, song.id) && Objects.equals(title, song.title) && Objects.equals(languange, song.languange) && Objects.equals(releaseDate, song.releaseDate);
+        return duration == song.duration && Objects.equals(id, song.id) && Objects.equals(title, song.title) && Objects.equals(language, song.language) && Objects.equals(releaseDate, song.releaseDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, duration, languange, releaseDate);
+        return Objects.hash(id, title, duration, language, releaseDate);
     }
 
     @Override
@@ -71,7 +89,7 @@ public class Song {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", duration=" + duration +
-                ", languange='" + languange + '\'' +
+                ", languange='" + language + '\'' +
                 ", releaseDate=" + releaseDate +
                 '}';
     }
@@ -80,12 +98,12 @@ public class Song {
         this.duration = duration;
     }
 
-    public String getLanguange() {
-        return languange;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setLanguange(String languange) {
-        this.languange = languange;
+    public void setLanguage(String languange) {
+        this.language = languange;
     }
 
 
